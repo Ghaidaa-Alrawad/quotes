@@ -3,11 +3,26 @@
  */
 package quotesLab;
 
+
 public class App {
     public static void main(String[] args) {
-        System.out.println("Lab 08");
-        Qclass q1 = new Qclass();
-        q1.randomQ();
-    }
 
+        System.out.println("Lab 08");
+        Qclass[] localQuotes = QuoteManager.readQuotesFromFile("app/src/main/resources/recentquotes.json");
+        if (localQuotes != null && localQuotes.length > 0) {
+            Qclass randomLocalQuote = QuoteManager.getRandomQuote(localQuotes);
+            QuoteManager.displayQuote(randomLocalQuote);
+        }
+
+        System.out.println("---");
+
+        System.out.println("Lab 09");
+        Qclass[] apiQuotes = QuoteManager.readQuotesFromApi("https://codefellows.github.io/code-401-java-guide/curriculum/class-08/recentquotes.json");
+        if (apiQuotes != null && apiQuotes.length > 0) {
+            Qclass randomApiQuote = QuoteManager.getRandomQuote(apiQuotes);
+            QuoteManager.saveQuoteToJson(randomApiQuote, "app/src/main/resources/RandomQ.json");
+            QuoteManager.displayQuote(randomApiQuote);
+        }
+
+    }
 }
